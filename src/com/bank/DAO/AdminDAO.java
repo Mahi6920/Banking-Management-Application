@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.bank.model.Admin;
+import com.bank.model.User;
 import com.bank.util.DBConnection;
 
 public class AdminDAO {
@@ -33,23 +34,92 @@ public class AdminDAO {
 		return false;
 	}
 	
-	public boolean login(Admin admin) throws SQLException {
+	public boolean login(Admin admin) {
 		
 		String sql = "SELECT * FROM admin WHERE mail = ? AND password = ?;";
 		
-		Connection connection = DBConnection.getConnection();
-		
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, admin.getMail());
-		preparedStatement.setString(2, admin.getPassword());
-		
-		ResultSet resultSet = preparedStatement.executeQuery();
-		
-		while(resultSet.next()) {
-			return true;
+		try(Connection connection = DBConnection.getConnection()) {
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, admin.getMail());
+			preparedStatement.setString(2, admin.getPassword());
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
 	}
 	
+	// account creation
+	public boolean accountCreation(User user) {
+		String sql = "INSERT INTO user(name, mail, amount) VALUES (?, ?, ?);";
+		
+		long accountNumber = 0;
+				
+		boolean returnVal = false;
+		
+		try(Connection connection = DBConnection.getConnection()) {
+			PreparedStatement prepareStatement = connection.prepareStatement(sql);
+			prepareStatement.setString(1, user.getName());
+			prepareStatement.setString(2, user.getMail());
+			prepareStatement.setDouble(3, user.getAmount());
+			
+//			int execute = 
+					prepareStatement.executeUpdate();
+//			if (execute > 0) {
+//				returnVal = true;
+//			}
+			
+			// get account number
+			String accountSQL = "SELECT * FROM user WHERE mail = ?;";
+			
+			try {
+				PreparedStatement prepareStatement1 = connection.prepareStatement(accountSQL);
+				prepareStatement1.setString(1, user.getMail());
+				
+				ResultSet resultSet = prepareStatement1.executeQuery();
+				
+				while(resultSet.next()) {
+					
+					accountNumber = 1003441000 + resultSet.getInt(1);
+					
+					System.out.println("Account Number: " + accountNumber);					
+					
+					// storing account number by using mail with update query
+					try {
+						String accountNumberSQL = "UPDATE user SET accountNumber = ? WHERE mail = ?;";
+						
+						PreparedStatement prepareStatement2 = connection.prepareStatement(accountNumberSQL);
+						prepareStatement2.setLong(1, accountNumber);
+						prepareStatement2.setString(2, user.getMail());
+						
+						int execute = prepareStatement2.executeUpdate();
+						if (execute > 0) {
+							returnVal = true;
+						}
+						
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+					
+				}
+//				returnVal = true;
+				
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return returnVal;
+	}
 }

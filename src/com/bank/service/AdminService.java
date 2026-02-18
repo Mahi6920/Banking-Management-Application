@@ -1,14 +1,14 @@
 package com.bank.service;
 
-import java.sql.SQLException;
-
 import com.bank.DAO.AdminDAO;
 import com.bank.model.Admin;
+import com.bank.model.User;
 
 public class AdminService {
 	
 	private AdminDAO adminDao = new AdminDAO();
 	
+	// admin registration
 	public boolean registration(Admin admin) {
 		
 		if (admin == null) {
@@ -24,7 +24,8 @@ public class AdminService {
 		return adminDao.registration(admin);
 	}
 	
-	public boolean login(Admin admin) throws SQLException {
+	// admin login
+	public boolean login(Admin admin) {
 				
 		if (admin == null) {
 			System.err.println("Enter Valid Details.");
@@ -40,4 +41,23 @@ public class AdminService {
 		return adminDao.login(admin);
 	}
 	
+	// account creation
+	public boolean accountCreation(User user) {
+		
+		if (user == null) {
+			System.err.println("Enter Details");
+			return false;
+		} else if (user.getName() == null) {
+			System.err.println("Enter Name");
+			return false;
+		} else if (user.getMail() == null) {
+			System.err.println("Enter E-mail");
+			return false;
+		} else if (user.getAmount() <= 0.0) {
+			System.err.println("Enter Valid Amount");
+			return false;
+		}
+		
+		return adminDao.accountCreation(user);
+	}
 }

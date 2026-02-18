@@ -1,14 +1,14 @@
 package com.bank.controller;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.bank.model.Admin;
+import com.bank.model.User;
 import com.bank.service.AdminService;
 
 public class BankApp {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("** Welcome to Banking Application **");
@@ -55,6 +55,59 @@ public class BankApp {
 						if(adminService.login(adminLogin)) {
 							// after login functions
 							System.out.println("Login Success.");
+							System.out.println();
+							
+							boolean adminLoginLoop = true;
+							while(adminLoginLoop) {
+								System.out.println("1. Account Creation");
+								System.out.println("2. Account Deletion");
+								System.out.println("3. View Users");
+								System.out.println("4. Exit");
+								System.out.print("Enter Your Option: ");
+								int adminLoginOption = scanner.nextInt();
+								scanner.nextLine();
+								System.out.println();
+								
+								switch(adminLoginOption) {
+								case 1:
+									// account creation
+									System.out.println("Enter Name: ");
+									String userName = scanner.nextLine();
+									System.out.println("Enter E-mail: ");
+									String userMail = scanner.nextLine();
+									System.out.println("Enter Initial Balance: ");
+									double initialAmount = scanner.nextDouble();
+									
+									User user = new User(userName, userMail, initialAmount);
+									
+									if (adminService.accountCreation(user)) {
+										System.out.println("Account Created Succesful.");
+										System.out.println();
+									} else {
+										System.err.println("Account Creation Fail.");
+										adminLoginLoop = true;
+									}
+									
+									
+									break;
+									
+								case 2:
+									// account deletion
+									break;
+									
+								case 3:
+									// view users
+									break;
+									
+								case 4:
+									adminLoginLoop = false;
+									break;
+									
+								default:
+									System.out.println("Invalid Option Entered");
+									break;
+								}
+							}
 							
 							
 						} else {
@@ -110,6 +163,8 @@ public class BankApp {
 			}
 			
 		}
+		
+		scanner.close();
 
 	}
 
