@@ -1,5 +1,6 @@
 package com.bank.controller;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.bank.model.Admin;
@@ -7,14 +8,14 @@ import com.bank.service.AdminService;
 
 public class BankApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("** Welcome to Banking Application **");
 		System.out.println();
 		
 		// creating objects
-		AdminService adminservice = new AdminService();
+		AdminService adminService = new AdminService();
 		
 		
 		boolean loop = true;
@@ -41,7 +42,25 @@ public class BankApp {
 					
 					switch(adminOption) {
 					case 1:
+						
+						System.out.println("Enter Your E-mail: ");
+						String loginMail = scanner.nextLine();
+						System.out.println("Enter Your Password: ");
+						String loginPassword = scanner.nextLine();
+						
+						// call admin model
+						Admin adminLogin = new Admin(loginMail, loginPassword);
+						
 						// login
+						if(adminService.login(adminLogin)) {
+							// after login functions
+							System.out.println("Login Success.");
+							
+							
+						} else {
+							System.out.println("Login Fail. Enter Valid Details");
+						}
+						
 						break;
 						
 					case 2:
@@ -53,11 +72,11 @@ public class BankApp {
 						System.out.println("Enter Your Password: ");
 						String password = scanner.nextLine();
 						
-						Admin admin = new Admin(name, mail, password);
+						Admin adminRegistration = new Admin(name, mail, password);
 						
 												
-						if(adminservice.registration(admin)) {
-							System.out.println("Registration Successfull.");
+						if(adminService.registration(adminRegistration)) {
+							System.out.println("Registration Successful.");
 						} else {
 							System.out.println("Registration Fail.");
 						}
@@ -76,7 +95,7 @@ public class BankApp {
 				break;
 				
 			case 2: 
-				// for admin
+				// for user
 				break;
 				
 			case 3:
