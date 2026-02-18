@@ -99,3 +99,69 @@ Mahi@123
 
 Login Success.
 ```
+
+🏦 Account Creation Module
+# Feature Overview
+
+The Account Creation feature allows an Admin to create a new user account with:
+Name
+Email
+Initial balance
+Each user is assigned a system-generated unique account number.
+
+🔢 Account Number Generation Logic
+
+After inserting the user record:
+The database generates an auto-increment id.
+Account number is calculated as:
+```
+accountNumber = BASE_NUMBER + id
+```
+🗄 Database Design
+```
+CREATE TABLE user (
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+mail VARCHAR(50) UNIQUE NOT NULL,
+amount DOUBLE NOT NULL,
+accountNumber BIGINT UNIQUE
+);
+```
+
+▶ Sample Console Output
+```
+** Welcome to Banking Application **
+
+1. Admin
+2. User
+3. Exit
+Enter Your Option: 1
+
+1. Login
+2. Registration
+3. Exit
+Enter Your Option: 1
+
+Enter Your E-mail: 
+mahi@gmail.com
+Enter Your Password: 
+Mahi@123
+Login Success.
+
+1. Account Creation
+2. Account Deletion
+3. View Users
+4. Exit
+Enter Your Option: 1
+
+Enter Name: 
+Mahesh
+Enter E-mail: 
+mahi@gmail.com
+Enter Initial Balance: 
+1000
+Account Number: 1003441001
+Account Created Succesful.
+```
+
+
