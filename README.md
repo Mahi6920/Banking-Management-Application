@@ -49,4 +49,53 @@ Mahi@123
 Registration Successful.
 ```
 
+🔐 Admin Login Module
 
+The Admin Login feature allows registered administrators to authenticate using their email and password.
+
+User Input (Email, Password)
+        ↓
+Controller (BankApp)
+        ↓
+AdminService.login()
+   - Null validation
+   - Password length validation
+        ↓
+AdminDAO.login()
+   - Executes parameterized SQL query
+        ↓
+MySQL Database (admin table)
+   - Verifies email & password match
+        ↓
+Returns true / false
+        ↓
+Controller displays result
+
+🧠 Validation Logic (Service Layer)
+   - Email must not be null
+   - Password must not be null
+   - Password must be at least 6 characters
+   - Business validation is handled in the Service layer, not in the DAO.
+
+🗄 Database Authentication
+The DAO executes:
+SELECT * FROM admin WHERE mail = ? AND password = ?
+
+   - Uses PreparedStatement to prevent SQL injection
+   - Returns success only if matching record exists
+   - Database enforces UNIQUE email constraint
+
+▶ Sample Console Output
+```
+1. Login
+2. Registration
+3. Exit
+Enter Your Option: 1
+
+Enter Your E-mail:
+mahi@gmail.com
+Enter Your Password:
+Mahi@123
+
+Login Success.
+```
