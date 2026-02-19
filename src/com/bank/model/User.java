@@ -16,6 +16,10 @@ public class User {
 		this.acountNumber = acountNumber;
 	}
 
+	public User(long accountNumber) {
+		this.acountNumber = accountNumber;
+	}
+	
 	public User(String name, String mail, double amount) {
 		this.name = name;
 		this.mail = mail;

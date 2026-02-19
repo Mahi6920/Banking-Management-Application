@@ -60,4 +60,22 @@ public class AdminService {
 		
 		return adminDao.accountCreation(user);
 	}
+	
+	// account deletion
+	public boolean accountDeletion(User user) {
+		
+		if (user.getAcountNumber() == 0) {
+			System.err.println("Enter Account Number");
+			return false;
+		} else if (user.getAcountNumber() < 0) {
+			return false;
+		}
+		
+		return adminDao.accountDeletion(user);
+	}
+	
+	// view users
+	public void viewUsers() {
+		adminDao.viewUsers();
+	}
 }

@@ -93,10 +93,22 @@ public class BankApp {
 									
 								case 2:
 									// account deletion
+									System.out.println("Enter Account Number: ");
+									long delitionAccNumber = scanner.nextLong();
+									
+									User delUser = new User(delitionAccNumber);
+									
+									if (adminService.accountDeletion(delUser)) {
+										System.out.println("Account Deletion Succesfull.");
+									} else {
+										System.out.println("Account Deletion Fail.");
+									}
+									
 									break;
 									
 								case 3:
 									// view users
+									adminService.viewUsers();
 									break;
 									
 								case 4:
