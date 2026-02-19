@@ -164,4 +164,25 @@ Account Number: 1003441001
 Account Created Succesful.
 ```
 
+📋 4. View All Users (Formatted Console Table)
+Displays all users in structured table format:
 
+```
++----+------------+----------------------+----------+--------------+
+| Id | Name       | E-Mail               | Amount   | Account No   |
++----+------------+----------------------+----------+--------------+
+| 1  | Mahesh     | mahi@gmail.com       | 10000.00 | 1003441001   |
+| 2  | Ravi       | ravi@gmail.com       | 5000.00  | 1003441002   |
+| 3  | Lakshmi    | lakshmi@gmail.com    | 1200.00  | 1003441003   |
+| 4  | Rani       | rani@gmail.com       | 5200.00  | 1003441004   |
+| 5  | Sree       | sree@gmail.com       | 2500.00  | 1003441005   |
+| 6  | Raju       | raju@gmail.com       | 3500.00  | 1003441006   |
++----+------------+----------------------+----------+--------------+
+```
+
+❌ 5. Account Deletion
+   - Deletes user using account number
+   - Ensures safe removal using WHERE accountNumber = ?
+   - Returns success/failure status
+
+🗄 Database Design
