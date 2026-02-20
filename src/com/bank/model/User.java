@@ -8,6 +8,24 @@ public class User {
 	private double amount;
 	private long acountNumber;
 	
+	// login && registration
+	public User(String mail, String password) {
+		this.mail = mail;
+		this.password = password;
+	}
+	
+	// view balance
+	public User(String mail) {
+		this.mail = mail;		
+	}
+	
+	// transfer amount
+	public User(String mail, double amount, long acountNumber) {
+		this.mail = mail;
+		this.amount = amount;
+		this.acountNumber = acountNumber;
+	}
+	
 	public long getAcountNumber() {
 		return acountNumber;
 	}

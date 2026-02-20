@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.bank.model.Admin;
 import com.bank.model.User;
@@ -146,7 +144,6 @@ public class AdminDAO {
 
 	// view users
 	public void viewUsers() {
-		Map<String, String> hs = new HashMap<>();
 
 		String sql = "SELECT * FROM user;";
 
